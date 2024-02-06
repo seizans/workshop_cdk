@@ -1,6 +1,8 @@
-import { Stack, StackProps } from 'aws-cdk-lib';
+import { CfnOutput, Stack, StackProps } from 'aws-cdk-lib';
 import * as ec2 from 'aws-cdk-lib/aws-ec2';
 import { Construct } from 'constructs';
+
+import { readFile, readFileSync } from 'fs';
 
 export class WorkshopCdkStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
@@ -15,7 +17,17 @@ export class WorkshopCdkStack extends Stack {
       instanceType: ec2.InstanceType.of(ec2.InstanceClass.T2, ec2.InstanceSize.SMALL),
       machineImage: new ec2.AmazonLinuxImage({
         generation: ec2.AmazonLinuxGeneration.AMAZON_LINUX_2,
-      })
+      }),
+      vpcSubnets: {subnetType: ec2.SubnetType.PUBLIC},
     });
+
+    const script = readFileSync("./lib/resources/user-data.sh", "utf8");
+    webServer1.addUserData(script);
+
+    webServer1.connections.allowFromAnyIpv4(ec2.Port.tcp(80));
+
+    new CfnOutput(this, "WordpressServer1PublicIpAddress", {
+      value: `http://${webServer1.instance.attrPublicIp}`,
+    })
   }
 }
