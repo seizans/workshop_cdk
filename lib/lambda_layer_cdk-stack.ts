@@ -1,7 +1,7 @@
 import { PythonLayerVersion } from "@aws-cdk/aws-lambda-python-alpha";
 import { Stack, StackProps } from "aws-cdk-lib";
 import { ManagedPolicy, Role, ServicePrincipal } from "aws-cdk-lib/aws-iam";
-import { AssetCode, Function, Runtime } from "aws-cdk-lib/aws-lambda";
+import * as lambda from "aws-cdk-lib/aws-lambda";
 import { Construct } from "constructs";
 
 export class LambdaLayerCdkStack extends Stack {
@@ -30,14 +30,14 @@ export class LambdaLayerCdkStack extends Stack {
       {
         layerVersionName: lambdaParams.layerName,
         entry: "lambda/layer",
-        compatibleRuntimes: [Runtime.PYTHON_3_12],
+        compatibleRuntimes: [lambda.Runtime.PYTHON_3_12],
       },
     );
 
-    const lambdafunc: Function = new Function(this, lambdaParams.functionName, {
+    const lambdafunc = new lambda.Function(this, lambdaParams.functionName, {
       functionName: lambdaParams.functionName,
-      runtime: Runtime.PYTHON_3_12,
-      code: AssetCode.fromAsset(lambdaParams.codePath),
+      runtime: lambda.Runtime.PYTHON_3_12,
+      code: lambda.AssetCode.fromAsset(lambdaParams.codePath),
       role: lambdaRole,
       handler: "lambda_sand.handler",
       layers: [lambdaLayer],
