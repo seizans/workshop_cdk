@@ -4,7 +4,8 @@
     "enabled": true
   },
   "files": {
-    "ignore": ["cdk.out/**"]
+    "include": ["**/*.ts", "**/*.js", "*.json"],
+    "ignore": ["cdk.out/"]
   },
   "formatter": {
     "indentStyle": "space"
