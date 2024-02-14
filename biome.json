@@ -4,7 +4,7 @@
     "enabled": true
   },
   "files": {
-    "include": ["**/*.ts", "*.js", "*.json"],
+    "include": ["**/*.ts", "jest.config.js", "*.json"],
     "ignore": ["cdk.out/", "**/*.d.ts", "**/*.js"]
   },
   "formatter": {
