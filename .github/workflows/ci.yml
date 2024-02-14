@@ -16,3 +16,7 @@ jobs:
         run: npm ci
       - name: Build
         run: npm run build
+      - name: Run Biome
+        run: npx biome ci .
+      - name: Run Cdk
+        run: npx cdk list
