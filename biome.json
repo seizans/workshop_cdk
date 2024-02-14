@@ -5,7 +5,7 @@
   },
   "files": {
     "include": ["**/*.ts", "jest.config.js", "*.json"],
-    "ignore": ["cdk.out/", "**/*.d.ts", "**/*.js"]
+    "ignore": ["cdk.out/", "dist/**", "**/*.d.ts", "**/*.js"]
   },
   "formatter": {
     "indentStyle": "space"
